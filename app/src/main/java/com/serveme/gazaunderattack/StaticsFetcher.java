@@ -1,6 +1,21 @@
 package com.serveme.gazaunderattack;
 
-import java.text.NumberFormat;
+import android.app.Activity;
+import android.graphics.Color;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.PointStyle;
@@ -11,21 +26,8 @@ import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 import org.json.JSONArray;
 import org.json.JSONException;
-import android.app.Activity;
-import android.graphics.Color;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
+
+import java.text.NumberFormat;
 
 public class StaticsFetcher implements Response.Listener<JSONArray>,
 		Response.ErrorListener {
@@ -60,7 +62,7 @@ public class StaticsFetcher implements Response.Listener<JSONArray>,
 				mCurrentRenderer.setPointStrokeWidth(20.0f);
 				mCurrentRenderer.setColor(colors[i - 1 % colors.length]);
 				mCurrentRenderer.setLineWidth(3.0f);
-				mCurrentRenderer.setPointStyle(PointStyle.CIRCLE);
+                mCurrentRenderer.setPointStyle(PointStyle.CIRCLE);
 				mCurrentRenderer.setChartValuesTextSize(30.0f);
 				mRenderer.addSeriesRenderer(mCurrentRenderer);
 				mDataset.addSeries(mCurrentSeries[i - 1]);
@@ -91,7 +93,6 @@ public class StaticsFetcher implements Response.Listener<JSONArray>,
 					TypedValue.COMPLEX_UNIT_DIP, 15, activity.getResources()
 							.getDisplayMetrics());
 			mRenderer.setChartTitleTextSize(textSize);
-			// mRenderer.setChartValuesTextSize(textSize);   //FIXME: This doesn't exist in the chart version 1.2
 			mRenderer.setLabelsTextSize(textSize);
 			mRenderer.setLegendTextSize(textSize);
 			mRenderer.setLabelsColor(Color.BLACK);
@@ -102,16 +103,20 @@ public class StaticsFetcher implements Response.Listener<JSONArray>,
 			mRenderer.setGridColor(Color.BLACK);
 			mRenderer.setShowGridX(true);
 			mRenderer.setXTitle("Day");
-			mRenderer.setXLabels(1);// Distance
 			mRenderer.setAxisTitleTextSize(textSize);
 			mRenderer.setClickEnabled(true);
 			mRenderer.setSelectableBuffer(10);
+            mRenderer.setXAxisMin(0);
+            mRenderer.setYAxisMin(0);
 
-			mRenderer.setLabelFormat(NumberFormat.getIntegerInstance());
+
+
+            mRenderer.setLabelFormat(NumberFormat.getIntegerInstance());
 			int margin = (int) TypedValue.applyDimension(
-					TypedValue.COMPLEX_UNIT_DIP, 10, activity.getResources()
+					TypedValue.COMPLEX_UNIT_DIP, 20, activity.getResources()
 							.getDisplayMetrics());
-			mRenderer.setMargins(new int[] { margin, margin, margin, margin });
+			mRenderer.setMargins(new int[] { 0, margin, margin, 0 });
+
 			LinearLayout content = (LinearLayout) activity
 					.findViewById(R.id.content);
 			final GraphicalView mChart = ChartFactory.getLineChartView(
@@ -137,7 +142,10 @@ public class StaticsFetcher implements Response.Listener<JSONArray>,
 					}
 				}
 			});
-			mRenderer.setZoomEnabled(true);
+            double[] limits = new double[] {-1,result.length(),-1,Double.MAX_VALUE};
+            mRenderer.setPanLimits(limits);
+			//mRenderer.setZoomEnabled(true);
+            mChart.setZoomRate(0);
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 					LayoutParams.MATCH_PARENT, 0);
 			layoutParams.weight = 1;
