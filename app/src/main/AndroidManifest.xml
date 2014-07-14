@@ -29,6 +29,10 @@
             android:name="com.serveme.gazaunderattack.VideoActivity"
             android:label="@string/title_activity_video" >
         </activity>
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
     </application>
 
 </manifest>
