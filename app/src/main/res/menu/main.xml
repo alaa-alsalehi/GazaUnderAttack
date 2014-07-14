@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_facebook"
+        android:icon="@drawable/facebook"
+        android:orderInCategory="100"
+        android:showAsAction="always|ifRoom"
+        android:title="@string/action_facebook"/>
+    <item
+        android:id="@+id/action_twitter"
+        android:icon="@drawable/twitter"
+        android:orderInCategory="100"
+        android:showAsAction="always|ifRoom"
+        android:title="@string/action_twitter"/>
+    <item
+        android:id="@+id/action_youtube"
+        android:orderInCategory="100"
+        android:showAsAction="always|ifRoom"
+        android:title="@string/action_Youtube"/>
+
+</menu>
