@@ -24,7 +24,13 @@ public class VideoActivity extends ActionBarActivity {
 		return true;
 	}
 
-	public void setVideoes(Video[] videos) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GAManager.getInstance().trackScreen("Video Screen");
+    }
+
+    public void setVideoes(Video[] videos) {
 		ListView videoList = (ListView) findViewById(R.id.video_list);
 		youtubeAdapter = new YoutubeAdapter(this, videos);
 		videoList.setAdapter(youtubeAdapter);

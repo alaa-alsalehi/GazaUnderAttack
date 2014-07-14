@@ -58,7 +58,13 @@ public class MainActivity extends ActionBarActivity {
 		return true;
 	}
 
-	@Override
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GAManager.getInstance().trackScreen("Main Screen");
+    }
+
+        @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_facebook:

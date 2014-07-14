@@ -78,7 +78,9 @@ public class YoutubeAdapter extends BaseAdapter implements
 
 			@Override
 			public void onClick(View v) {
-				context.startActivity(YouTubeStandalonePlayer
+                GAManager.getInstance().trackEvent("Video", "Play", ((Holder) v.getTag()).video.getTitle());
+
+                context.startActivity(YouTubeStandalonePlayer
 						.createVideoIntent((Activity) context, API_KEY,
 								((Holder) v.getTag()).video.getId(), 0, true,
 								true));
