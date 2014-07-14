@@ -1,10 +1,11 @@
 package com.serveme.gazaunderattack;
 
-import com.viewpagerindicator.IconPagerAdapter;
-
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.viewpagerindicator.IconPagerAdapter;
 
 public class PlaceSlidesFragmentAdapter extends FragmentPagerAdapter implements IconPagerAdapter{
 
@@ -12,8 +13,6 @@ public class PlaceSlidesFragmentAdapter extends FragmentPagerAdapter implements 
 			R.drawable.gaza3
 
 	};
-
-	protected static final int[] ICONS = new int[] { R.drawable.gaza1 };
 
 	private int mCount = Images.length;
 
@@ -23,7 +22,11 @@ public class PlaceSlidesFragmentAdapter extends FragmentPagerAdapter implements 
 
 	@Override
 	public Fragment getItem(int position) {
-		return new PlaceSlideFragment(Images[position]);
+        PlaceSlideFragment placeSlideFragment = new PlaceSlideFragment();
+        Bundle bundle=new Bundle();
+        bundle.putInt("image",Images[position]);
+        placeSlideFragment.setArguments(bundle);
+        return placeSlideFragment;
 	}
 
 	@Override
